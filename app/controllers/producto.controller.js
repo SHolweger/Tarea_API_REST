@@ -7,7 +7,7 @@ exports.create = (req, res) => {
     // Validamos que dentro del  request no venga vacio el nombre, de lo contrario returna error
     if (!req.body.nombre) {
         res.status(400).send({
-            message: "No puede estar vacío!"
+            message: "¡El nombre no puede estar vacío!"
         });
         return;
     }
@@ -25,12 +25,12 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Product."
+                    err.message || "Ocurrió un error al crear el Producto."
             });
         });
 };
 
-//Get all
+// Obtener todos
 exports.findAll = (req, res) => {
     const nombre = req.query.nombre;
     var condition = nombre ? { nombre: { [Op.iLike]: `%${nombre}%` } } : null;
@@ -42,12 +42,12 @@ exports.findAll = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving products."
+                    err.message || "Ocurrió un error al obtener los Productos."
             });
         });
 };
 
-// Get by ID
+// Obtener por ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -57,11 +57,10 @@ exports.findOne = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Prouct with id=" + id
+                message: "Error al obtener el Producto con id=" + id
             });
         });
 };
-
 
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -72,17 +71,17 @@ exports.update = (req, res) => {
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Product was updated successfully."
+                    message: "El Producto fue actualizado correctamente."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`
+                    message: `No se pudo actualizar el Producto con id=${id}. ¡Quizás no se encontró el Producto o el cuerpo de la solicitud está vacío!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Product with id=" + id
+                message: "Error al actualizar el Producto con id=" + id
             });
         });
 };
@@ -95,17 +94,17 @@ exports.delete = (req, res) => {
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Product was deleted successfully!"
+                    message: "El Producto fue eliminado correctamente."
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Product with id=${id}. El producto no fue encontado!`
+                    message: `No se pudo eliminar el Producto con id=${id}. ¡El Producto no fue encontrado!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Tutorial with id=" + id
+                message: "No se pudo eliminar el Producto con id=" + id
             });
         });
 };
@@ -116,12 +115,12 @@ exports.deleteAll = (req, res) => {
         truncate: false
     })
         .then(nums => {
-            res.send({ message: `${nums} Products were deleted successfully!` });
+            res.send({ message: `${nums} Productos fueron eliminados correctamente.` });
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while removing all products."
+                    err.message || "Ocurrió un error al eliminar todos los Productos."
             });
         });
 };
